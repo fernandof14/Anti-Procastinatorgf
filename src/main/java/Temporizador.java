@@ -11,22 +11,28 @@ public class Temporizador extends TimerTask {
         this.tiempo = tiempo;
     }
 
+    public int getTiempo() {
+        return tiempo;
+    }
+
+    @Override
     public void run() {
         calcularTiempo();
+
     }
+
     void calcularTiempo() {
         minutos = tiempo / 60;
         segundos = tiempo % 60;
-        System.out.println("Tiempo: 0" + minutos + ":" + segundos);
+        System.out.println("Tiempo: " + minutos + ":" + segundos);
 
         tiempo--;
         if (tiempo == -1) {
             System.out.println("ADIOS");
-            cancel();
             System.exit(0);
-
 
         }
 
     }
+
 }
