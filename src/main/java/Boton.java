@@ -6,13 +6,13 @@ public class Boton extends JFrame implements ActionListener {
     JButton boton;
     JLabel texto;
 
-    public Boton() {
+    public Boton(String actividad) {
         setLayout(null);
         boton = new JButton("Exit");
         boton.setBounds(80, 150, 100, 30);
         boton.addActionListener(this);
         add(boton);
-        texto = new JLabel("Presione el botón para salir.");
+        texto = new JLabel(actividad);
         texto.setBounds(50, 50, 220, 40);
         add(texto);
     }

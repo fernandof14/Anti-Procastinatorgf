@@ -13,10 +13,18 @@ public class Principal {
         int opcion=0;
         int segundos = 0;
         int personalizado=0;
+        String actividad="nulo?";
 
         System.out.println("******MENU*******");
+
+
         System.out.println("I.1 minuto\nII.2 minutos\nIII.Personalizado");
         opcion = teclado.nextInt();
+        teclado.skip("\n");// estupido scanner
+
+        System.out.println("Ingresar tipo de actividad: ");
+        actividad=teclado.nextLine();
+
         if(opcion==3){
             System.out.println("Ingresar minutos: ");
             personalizado=teclado.nextInt();
@@ -32,18 +40,18 @@ public class Principal {
                 segundos=personalizado*60;
                 break;
         }
-        partirTimer(segundos);
+        partirTimer(segundos,actividad);
     }
 
-    void partirTimer(int segundos) {
+    void partirTimer(int segundos, String actividad) {
         Timer timer = new Timer();
         Temporizador tarea = new Temporizador();
         tarea.setTiempo(segundos);
         timer.schedule(tarea, 0, 1000);
-        salir();
+        salir(actividad);
     }
-    void salir(){
-        Boton ventana = new Boton();
+    void salir(String actividad){
+        Boton ventana = new Boton(actividad);
         ventana.setBounds(500, 250, 250, 250);
         ventana.setVisible(true);
         ventana.setResizable(false);
