@@ -1,5 +1,6 @@
+import javax.swing.*;
 import java.util.TimerTask;
-
+import javax.swing.JOptionPane;
 public class Temporizador extends TimerTask {
 
     int temporal = 0;
@@ -7,32 +8,34 @@ public class Temporizador extends TimerTask {
     int minutos = 0;
     int tiempo = 5;
 
+    Principal sobo=new Principal();
+
     public void setTiempo(int tiempo) {
         this.tiempo = tiempo;
     }
 
-    public int getTiempo() {
-        return tiempo;
-    }
+
 
     @Override
     public void run() {
-        calcularTiempo();
-
+        System.out.println(calcularTiempo());
     }
 
-    void calcularTiempo() {
+    String calcularTiempo() {
         minutos = tiempo / 60;
         segundos = tiempo % 60;
-        System.out.println("Tiempo: " + minutos + ":" + segundos);
-
         tiempo--;
         if (tiempo == -1) {
-            System.out.println("ADIOS");
+            System.out.println("RING!!!!!");
             System.exit(0);
 
         }
-
+        return "Tiempo: " + minutos + ":" + segundos;
     }
+    void hola(){
+        JOptionPane.showMessageDialog(null, "Hello World");
+    }
+
+
 
 }

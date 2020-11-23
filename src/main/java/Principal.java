@@ -18,29 +18,32 @@ public class Principal {
         System.out.println("******MENU*******");
 
 
-        System.out.println("I.1 minuto\nII.2 minutos\nIII.Personalizado");
-        opcion = teclado.nextInt();
-        teclado.skip("\n");// estupido scanner
+            System.out.println("I.1 Minuto\nII.2 Minutos\nIII.Personalizado\nIV.Salir");
+            opcion = teclado.nextInt();
+            teclado.skip("\n");// estupido scanner
+            if (opcion == 3) {
+                System.out.println("Ingresar minutos: ");
+                personalizado = teclado.nextInt();
+            }
+            switch (opcion) {
+                case 1:
+                    segundos = 1 * 60;
+                    break;
+                case 2:
+                    segundos = 2 * 60;
+                    break;
+                case 3:
+                    segundos = personalizado * 60;
+                    break;
+                case 4:
+                    System.out.println("Saliendo...");
+                    System.exit(0);
+                    break;
+            }
+            System.out.println("Ingresar nombre de la actividad: ");
+            actividad = teclado.nextLine();
+            partirTimer(segundos, actividad);
 
-        System.out.println("Ingresar tipo de actividad: ");
-        actividad=teclado.nextLine();
-
-        if(opcion==3){
-            System.out.println("Ingresar minutos: ");
-            personalizado=teclado.nextInt();
-        }
-        switch(opcion){
-            case 1:
-                segundos=1*60;
-                break;
-            case 2:
-                segundos=2*60;
-                break;
-            case 3:
-                segundos=personalizado*60;
-                break;
-        }
-        partirTimer(segundos,actividad);
     }
 
     void partirTimer(int segundos, String actividad) {

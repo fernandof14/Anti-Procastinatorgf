@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.JOptionPane;
 
 public class Boton extends JFrame implements ActionListener {
 
     JButton boton;
     JLabel texto;
+    String act="";
 
     public Boton(String actividad) {
         setLayout(null);
@@ -15,6 +17,7 @@ public class Boton extends JFrame implements ActionListener {
         texto = new JLabel(actividad);
         texto.setBounds(50, 50, 220, 40);
         add(texto);
+
     }
 
     @Override
