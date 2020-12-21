@@ -33,7 +33,13 @@ public class Temporizador extends TimerTask {
         return "Tiempo: " + minutos + ":" + segundos;
     }
 
+    public int getSegundos() {
+        return segundos;
+    }
 
+    public int getMinutos() {
+        return minutos;
+    }
 
 
 }
