@@ -5,8 +5,8 @@ public class Principal {
     static Scanner teclado = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Principal omo=new Principal();
-        omo.menu();
+        Principal reloj=new Principal();
+        reloj.menu();
     }
 
     void menu() {

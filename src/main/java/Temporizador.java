@@ -8,7 +8,7 @@ public class Temporizador extends TimerTask {
     int minutos = 0;
     int tiempo = 5;
 
-    Principal sobo=new Principal();
+
 
     public void setTiempo(int tiempo) {
         this.tiempo = tiempo;
@@ -32,9 +32,7 @@ public class Temporizador extends TimerTask {
         }
         return "Tiempo: " + minutos + ":" + segundos;
     }
-    void hola(){
-        JOptionPane.showMessageDialog(null, "Hello World");
-    }
+
 
 
 
