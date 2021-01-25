@@ -14,7 +14,7 @@ public class PanelInt extends JPanel implements ActionListener{
     JLabel tActual;
     int contadorTareas = 0;
     Timer t;
-    String textoTiempo="00:00";
+    String textoTiempo="--:--";
     
     TareaPomodoro tareaActual = new TareaPomodoro("Nada", false);
     ArrayList<TareaPomodoro> tareas = new ArrayList<>();
@@ -24,7 +24,7 @@ public class PanelInt extends JPanel implements ActionListener{
     
     
     public PanelInt(){
-        setBackground(Color.pink);
+        setBackground(new Color(238,99,74));
         setLayout(null);
         setLabelTitulo();
         setFieldAdd();

@@ -10,7 +10,7 @@ public class Interfaz extends JFrame {
 
         public Interfaz() {
             this.setSize(700, 700);
-            setTitle("Anti-Procrastinator v0.01");
+            setTitle("Anti-Procrastinator v0.82");
             setLocationRelativeTo(null);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             PanelInt lamina = new PanelInt();
