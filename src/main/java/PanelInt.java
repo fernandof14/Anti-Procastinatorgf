@@ -11,18 +11,14 @@ public class PanelInt extends JPanel implements ActionListener{
     JTextField tareaField;
     JTextField minutos;
     JTextArea log;
-    JLabel tActual;
+    String textoLabelTarea = "Configurando programa.";
     int contadorTareas = 0;
     Timer t;
     String textoTiempo="00:00";
-    
-    TareaPomodoro tareaActual = new TareaPomodoro("Nada", false);
-    ArrayList<TareaPomodoro> tareas = new ArrayList<>();
+    String tareaActual = ("Nada");
     ArrayList<String> nombreTareas = new ArrayList<>();
     JComboBox listaTareas = new JComboBox(nombreTareas.toArray());
-    ManejoArchivos archivos=new ManejoArchivos();
-    
-    
+
     public PanelInt(){
         setBackground(Color.pink);
         setLayout(null);
@@ -36,12 +32,10 @@ public class PanelInt extends JPanel implements ActionListener{
         setLabelMinutos();
         setFieldMinutos();
         setLabelCurrent();
-        setLabelTask();
         setListaTareas();
         setButtonRemove();
         
     }
-
     
     private void setLabelTitulo(){
         JLabel tag = new JLabel("Anti-Procrastinator");
@@ -73,13 +67,13 @@ public class PanelInt extends JPanel implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(tareaField.getText().isEmpty()) {
-                    tareaActual.setNombreTarea("Tarea n°: " + (contadorTareas+1));
+                    tareaActual=("Tarea n°: " + (contadorTareas+1));
                 }else{
-                    tareaActual.setNombreTarea(tareaField.getText());
+                    tareaActual=(tareaField.getText());
                 }
-                tareas.add(tareaActual);
-                listaTareas.addItem(tareaActual.getNombreTarea());
-                log.setText(">"+tareas.get(contadorTareas).getNombreTarea() + " agregada." +"\n" + log.getText());
+                nombreTareas.add(tareaActual);
+                listaTareas.addItem(tareaActual);
+                log.setText(">"+nombreTareas.get(contadorTareas) + " agregada." +"\n" + log.getText());
                 contadorTareas++;
             }
         };
@@ -95,7 +89,7 @@ public class PanelInt extends JPanel implements ActionListener{
             public void actionPerformed(ActionEvent e) {
                 int index = (listaTareas.getSelectedIndex());
                 log.setText(">"+listaTareas.getItemAt(index) + " eliminada." + "\n" + log.getText());
-                tareas.remove(index);
+                nombreTareas.remove(index);
                 listaTareas.removeItemAt(index);
                 listaTareas.updateUI();
                 contadorTareas--;
@@ -106,7 +100,6 @@ public class PanelInt extends JPanel implements ActionListener{
 
     int segundosReloj =0;
     int bloqueo =0;
-    int pomodoros=3;
     boolean enDescanso=false;
 
     void creadorTiempo(int valor){
@@ -147,7 +140,7 @@ public class PanelInt extends JPanel implements ActionListener{
         add(seguir);
         add(reiniciar);
         seguir.setEnabled(false);
-        
+        ManejoArchivos sonido=new ManejoArchivos();
         ActionListener click = new ActionListener() {
             
             @Override
@@ -177,32 +170,34 @@ public class PanelInt extends JPanel implements ActionListener{
                 System.out.println("i: "+ segundosReloj);
                 segundosReloj--;
                 System.out.println(textoTiempo);
-                
-                if(segundosReloj ==-1 && pomodoros>0 && enDescanso==false){// si los segundos son -1, el timer para. si fuese 0, pararia en 1 segundo
-                    archivos.ReproducirSonido();
+                textoLabelTarea = (nombreTareas.get(0));
+                if(segundosReloj ==-1 && nombreTareas.size()>0 && enDescanso==false){// si los segundos son -1, el timer para. si fuese 0, pararia en 1 segundo
+
+                    sonido.ReproducirSonido();
                     t.stop();
                     segundosReloj =10;
                     t.start();
-                    pomodoros--;
+                    nombreTareas.remove(0);
+                    listaTareas.removeItemAt(0);
                     enDescanso=true;
-                    tActual.setText("Descanso.");
+                    textoLabelTarea = ("Descanso");
                 
-                }else if(segundosReloj ==-1 && pomodoros>0 && enDescanso==true){
+                }else if(segundosReloj ==-1 && nombreTareas.size()>0 && enDescanso==true){
                     segundosReloj =12;//60*parseInt(minutos.getText());
-                    archivos.ReproducirSonido();
+                    sonido.ReproducirSonido();
                     t.stop();
                     t.start();
                     enDescanso=false;
                     //termino descanso
                     
-                }else if(segundosReloj ==-1 && pomodoros==0){
-                    archivos.ReproducirSonido();
+                }else if(segundosReloj ==-1 && nombreTareas.size()==0){
+                    sonido.ReproducirSonido();
                     t.stop();
                     segundosReloj =0;
                     start.setEnabled(true);
                     minutos.setEnabled(true);
                     bloqueo =0;
-                    tActual.setText("¡Terminado!");
+                    textoLabelTarea = ("¡Terminado!");
                 }
                 else if(/*i==-1 && */60*parseInt(minutos.getText())==0){//si los minutos son 0, el programa no arranca
                     log.setText(">Tiempo invalido." +"\n" + log.getText());
@@ -249,7 +244,7 @@ public class PanelInt extends JPanel implements ActionListener{
     }
    
      JLabel time = new JLabel(textoTiempo);
-   
+     JLabel tActual = new JLabel(textoLabelTarea);
     
     public void paintComponent(Graphics g){//se encarga de "dibujar" cosas en el panel. En este caso, se usa para
                                           //actualizar el texto con el tiempo
@@ -257,9 +252,12 @@ public class PanelInt extends JPanel implements ActionListener{
         time.setBounds(280,100, 120, 40 );
         time.setFont(new Font("arial", Font.PLAIN, 40));
         add(time);
-        Image imagen=archivos.leerImagen();
-        g.drawImage(imagen, 110, 71, null);
         time.setText(textoTiempo);
+        tActual.setBounds(230,180, 500, 40 );
+        tActual.setFont(new Font("arial", Font.PLAIN, 25));
+        add(tActual);
+        tActual.setText(textoLabelTarea);
+
         updateUI();//al parecer no se necesita este metodo
         }
 
@@ -302,13 +300,6 @@ public class PanelInt extends JPanel implements ActionListener{
         add(minutos);
         
         
-    }
-
-    private void setLabelTask(){
-        tActual = new JLabel("Configurando programa.");
-        tActual.setBounds(230,180, 500, 40 );
-        tActual.setFont(new Font("arial", Font.PLAIN, 25));
-        add(tActual);
     }
 
     private void setLabelCurrent(){
